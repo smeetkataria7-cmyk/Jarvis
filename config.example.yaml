@@ -1,0 +1,56 @@
+# Jarvis configuration.
+# Copy this file to config.yaml and fill it in. config.yaml is gitignored
+# and must never be committed — it holds your keys.
+
+brain:
+  # Which AI does the thinking: "openai", "anthropic", or "ollama".
+  # Changing this one line swaps the brain. Nothing else needs to change.
+  provider: openai
+
+  openai:
+    api_key: ""                      # from platform.openai.com/api-keys
+    # Set this to a model your account actually has access to — check the
+    # models list in your OpenAI dashboard. If a call 404s, this is why.
+    model: gpt-4o
+    max_tokens: 2048
+
+  anthropic:
+    api_key: ""                      # from console.anthropic.com
+    model: claude-sonnet-5
+    max_tokens: 2048
+
+  ollama:
+    host: http://localhost:11434
+    model: llama3.1:8b
+
+server:
+  # Bind to 0.0.0.0 so your phone can reach Jarvis over your home WiFi.
+  # This is LAN-only — it is not exposed to the internet unless you
+  # deliberately forward a port on your router. Don't.
+  host: 0.0.0.0
+  port: 8765
+
+  # Shared secret the phone sends with every request. Generate with:
+  #   python3 -c "import secrets; print(secrets.token_urlsafe(32))"
+  # Without this, anyone on your WiFi could talk to Jarvis.
+  auth_token: ""
+
+memory:
+  path: data/jarvis.db
+  # How many past turns to feed the brain as context
+  context_turns: 20
+
+selfedit:
+  # Master switch. If false, Jarvis cannot propose code changes at all.
+  enabled: true
+
+  # Every proposed patch must pass these before it can even reach your phone.
+  run_tests: true
+  test_command: python3 -m pytest tests/ -q
+
+  # Auto-reject any patch that touches more than this many lines.
+  # Keeps changes small enough for you to actually read on a phone screen.
+  max_diff_lines: 400
+
+  # Patches expire if you don't approve them within this many minutes.
+  approval_timeout_minutes: 60

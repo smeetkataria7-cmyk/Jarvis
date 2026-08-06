@@ -1,0 +1,33 @@
+# Secrets — never commit
+config.yaml
+.env
+*.key
+
+# Jarvis runtime state
+data/
+*.db
+*.sqlite3
+logs/
+*.log
+
+# Patch queue (runtime, machine-local)
+guardian/queue/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+*.apk
+*.keystore
+
+# OS
+.DS_Store

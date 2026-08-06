@@ -1,0 +1,16 @@
+# Core
+flask>=3.0.0
+pyyaml>=6.0
+requests>=2.31.0
+
+# Signature verification for biometric approvals (not optional — the
+# Guardian will refuse to start without it)
+cryptography>=42.0.0
+
+# Brain providers. Install only the one you use; both are safe to omit
+# if you're running Ollama, which speaks plain HTTP.
+openai>=1.40.0
+anthropic>=0.40.0
+
+# Tests
+pytest>=8.0.0
