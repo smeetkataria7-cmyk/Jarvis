@@ -27,7 +27,8 @@ from flask import Blueprint, current_app, jsonify, request
 
 from core import phone
 from core.brain import BrainError
-from guardian import auth as guardian_auth
+from core.selfedit import SelfEditError, propose_improvement
+from guardian import auth as guardian_auth, patcher
 
 log = logging.getLogger("jarvis.server")
 
@@ -278,3 +279,56 @@ def facts():
 def reliability():
     """Which actions keep failing — the evidence behind self-edit proposals."""
     return jsonify({"actions": _memory().failure_rates()})
+
+
+@bp.post("/selfedit/consider")
+@require_token
+def consider_self_edit():
+    """Look at the failure log and, if warranted, draft a patch.
+
+    Nothing is applied here. A successful call queues a proposal that still has
+    to pass its tests on a scratch branch and then be approved with your
+    fingerprint. "nothing worth changing" is the common and correct outcome.
+    """
+    config = _config()
+
+    if not config["selfedit"]["enabled"]:
+        return jsonify({"error": "self-editing is disabled in config.yaml"}), 403
+
+    try:
+        proposal = propose_improvement(_memory(), _brain())
+    except (SelfEditError, BrainError) as exc:
+        return jsonify({"error": str(exc)}), 503
+
+    if proposal is None:
+        return jsonify({"proposed": False, "reason": "nothing worth changing"})
+
+    try:
+        patch = patcher.propose(
+            summary=proposal["summary"],
+            rationale=proposal["rationale"],
+            diff=proposal["diff"],
+            max_diff_lines=config["selfedit"]["max_diff_lines"],
+        )
+    except patcher.PatchError as exc:
+        # Includes the protected-path refusal. Worth surfacing rather than
+        # swallowing: a model repeatedly trying to patch guardian/ is something
+        # you would want to know about.
+        return jsonify({"proposed": False, "reason": str(exc)}), 400
+
+    if config["selfedit"]["run_tests"]:
+        passed = patcher.run_tests(patch, config["selfedit"]["test_command"])
+        if not passed:
+            return jsonify({
+                "proposed": False,
+                "reason": f"patch failed its tests ({patch.status})",
+                "patch_id": patch.patch_id,
+            })
+
+    return jsonify({
+        "proposed": True,
+        "patch_id": patch.patch_id,
+        "summary": patch.summary,
+        "diff_lines": patch.diff_lines,
+        "awaiting": "your approval on the phone",
+    })

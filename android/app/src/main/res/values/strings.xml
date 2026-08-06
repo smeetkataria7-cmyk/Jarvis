@@ -11,11 +11,42 @@
     -->
     <string name="accessibility_description">Lets Jarvis read your screen and tap, type and scroll on your behalf, so it can carry out tasks in other apps. This is a powerful permission. Only enable it if you set up this assistant yourself.</string>
 
+    <!-- Pairing -->
     <string name="enrollment_title">Pair with your computer</string>
-    <string name="enrollment_hint">Enter the 6-digit code shown in the Jarvis terminal window</string>
+    <string name="enrollment_hint">Enter your computer\'s address, the auth token from config.yaml, and the 6-digit code shown in the Jarvis terminal window.</string>
+    <string name="server_address">Computer address, e.g. http://192.168.1.20:8765</string>
+    <string name="auth_token">Auth token</string>
+    <string name="enrollment_code">6-digit code</string>
+    <string name="pair">Pair</string>
 
+    <!-- Phone control -->
+    <string name="enable_phone_control">Turn on phone control</string>
+    <string name="enable_phone_control_body">To tap, type and open apps for you, Jarvis needs the Accessibility permission. Android will warn you that this lets it see and control your screen. That warning is accurate — grant it only because you set this up yourself.</string>
+    <string name="open_settings">Open settings</string>
+    <string name="not_now">Not now</string>
+
+    <!-- Main screen -->
+    <string name="status_line">%1$s · %2$s</string>
+    <string name="control_on">phone control on</string>
+    <string name="control_off">phone control off</string>
+    <string name="not_paired">not paired</string>
+    <string name="listening">Listening…</string>
+    <string name="thinking">Thinking…</string>
+    <string name="type_or_hold_mic">Type, or tap the mic</string>
+    <string name="speak_to_jarvis">Speak to Jarvis</string>
+
+    <!-- Confirming an action -->
+    <string name="confirm_title">Just checking</string>
+    <string name="yes">Yes, do it</string>
+    <string name="no">No</string>
+
+    <!-- Self-edit approval -->
     <string name="approve_patch_title">Jarvis wants to change its own code</string>
-    <string name="approve_patch_subtitle">Read the change below, then confirm with your fingerprint</string>
+    <string name="approve_patch_subtitle">Read the change, then confirm with your fingerprint</string>
+    <string name="review_change">Review the change</string>
+    <string name="approve">Approve</string>
+    <string name="reject">Reject</string>
+    <string name="later">Later</string>
     <string name="biometric_prompt_title">Approve code change</string>
     <string name="biometric_prompt_negative">Cancel</string>
 </resources>

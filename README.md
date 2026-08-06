@@ -206,16 +206,31 @@ python3 -m pytest tests/ -q
 
 ## Status
 
-Working and tested:
+Complete, with 98 tests passing:
 
-- Brain layer — OpenAI, Anthropic, Ollama
-- Memory — conversation, facts, outcome logging
-- Risk tiering and confirmation logic
-- The Guardian: protected paths, biometric verification, patch pipeline
-- Android: keystore, accessibility service, HTTP client, approval flow
+| Computer | Phone |
+|---|---|
+| Brain — OpenAI, Anthropic, Ollama | Pairing and hardware keystore |
+| Memory — conversation, facts, outcomes | Voice in and out |
+| Risk tiering and confirmation | Accessibility phone control |
+| Guardian — protected paths, signatures | Contact resolution |
+| Self-edit proposer and patch pipeline | Action execution |
+| | Biometric patch approval |
 
-Not written yet:
+The Android app has never been compiled — this repo was built in a container
+with no Android SDK. The Kotlin is written against real APIs, but expect to fix
+a few things the first time Android Studio looks at it.
 
-- `MainActivity` — the app's actual screens
-- Voice in and out
-- The executor that maps a server action onto an accessibility call
+### Known limitations, stated plainly
+
+- **No wake word.** You tap the mic. Always-on listening needs a foreground
+  service and a hotword engine; it's the obvious next feature.
+- **WhatsApp voice notes are refused**, not attempted. The record button needs
+  a press-and-hold on a view with no accessibility node, and an unreliable
+  implementation would occasionally send half a second of silence to someone.
+- **WiFi and Bluetooth can't be toggled** — Android removed that from apps in
+  version 10. Jarvis opens the settings panel instead.
+- **The Guardian shares a process with the assistant.** File-level protection
+  and the git audit trail are the real boundary, and for a personal LAN setup
+  that is proportionate. Splitting them into separate processes would be
+  stricter.

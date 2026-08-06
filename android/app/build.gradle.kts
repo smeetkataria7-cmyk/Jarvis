@@ -10,12 +10,13 @@ android {
     defaultConfig {
         applicationId = "com.jarvis.assistant"
 
-        // API 30 is the floor because setUserAuthenticationParameters — the
-        // call that binds the signing key to a per-use biometric check — only
-        // exists from R onwards. On older releases the only option is a
-        // validity window measured in seconds, which would mean one fingerprint
-        // could authorise several approvals. Not worth supporting.
-        minSdk = 30
+        // Two things set this floor. setUserAuthenticationParameters — the call
+        // that binds the signing key to a per-use biometric check — arrived in
+        // API 30; before it, the only option was a validity window measured in
+        // seconds, which would let one fingerprint authorise several approvals.
+        // And SmsManager became a system service in API 31, with the older
+        // static accessor deprecated. 31 satisfies both without branching.
+        minSdk = 31
         targetSdk = 34
 
         versionCode = 1
@@ -54,6 +55,10 @@ dependencies {
     // BiometricPrompt, and the CryptoObject plumbing that ties a fingerprint
     // to a specific signing operation rather than to a vague recent unlock.
     implementation("androidx.biometric:biometric:1.1.0")
+
+    // EncryptedSharedPreferences. The auth token lives on disk, and while it
+    // can't approve a code change, it can send texts as you.
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")

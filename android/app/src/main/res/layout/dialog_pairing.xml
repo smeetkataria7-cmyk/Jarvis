@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="8dp">
+
+    <EditText
+        android:id="@+id/serverUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="no"
+        android:hint="@string/server_address"
+        android:inputType="textUri" />
+
+    <EditText
+        android:id="@+id/authToken"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints="no"
+        android:hint="@string/auth_token"
+        android:inputType="textPassword" />
+
+    <!--
+        Numeric keyboard: the code is always six digits, and there is no reason
+        to make someone hunt for the number row at the one moment they are
+        copying something off a terminal.
+    -->
+    <EditText
+        android:id="@+id/enrollmentCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints="no"
+        android:hint="@string/enrollment_code"
+        android:inputType="number"
+        android:maxLength="6" />
+
+</LinearLayout>
