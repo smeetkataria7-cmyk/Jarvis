@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Jarvis</string>
+
+    <string name="accessibility_label">Jarvis phone control</string>
+
+    <!--
+        Shown on the Android permission screen. Written plainly on purpose:
+        this grants very broad power, and anyone enabling it deserves an
+        honest sentence rather than a reassuring one.
+    -->
+    <string name="accessibility_description">Lets Jarvis read your screen and tap, type and scroll on your behalf, so it can carry out tasks in other apps. This is a powerful permission. Only enable it if you set up this assistant yourself.</string>
+
+    <string name="enrollment_title">Pair with your computer</string>
+    <string name="enrollment_hint">Enter the 6-digit code shown in the Jarvis terminal window</string>
+
+    <string name="approve_patch_title">Jarvis wants to change its own code</string>
+    <string name="approve_patch_subtitle">Read the change below, then confirm with your fingerprint</string>
+    <string name="biometric_prompt_title">Approve code change</string>
+    <string name="biometric_prompt_negative">Cancel</string>
+</resources>

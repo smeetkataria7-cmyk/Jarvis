@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    What the Accessibility Service is allowed to do.
+
+    canRetrieveWindowContent and canPerformGestures are the two that make phone
+    control possible at all — reading the screen and touching it. There is no
+    smaller set that still works.
+
+    accessibilityEventTypes is deliberately typeWindowStateChanged only, rather
+    than typeAllMask. Jarvis acts on commands from your server, not on whatever
+    happens to cross the screen, so there is no reason to receive every text
+    change on the device. Subscribing to less is the difference between an
+    assistant and a keylogger.
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeWindowStateChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagDefault|flagRetrieveInteractiveWindows|flagReportViewIds"
+    android:canPerformGestures="true"
+    android:canRetrieveWindowContent="true"
+    android:description="@string/accessibility_description"
+    android:notificationTimeout="100" />

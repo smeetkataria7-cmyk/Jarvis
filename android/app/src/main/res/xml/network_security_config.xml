@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Cleartext HTTP is permitted to private-network addresses only, and refused
+    everywhere else.
+
+    Plain HTTP is acceptable here because the traffic never leaves your home
+    network — Jarvis binds to a LAN address and is not reachable from the
+    internet unless someone deliberately forwards a port. The alternative,
+    a self-signed certificate, teaches you to tap through certificate warnings,
+    and a person conditioned to dismiss those warnings is less safe than one
+    sending plaintext across their own router.
+
+    If you ever do expose Jarvis beyond your LAN, this file is wrong and needs
+    a real certificate. Put it behind a VPN or Tailscale instead.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">192.168.0.0</domain>
+        <domain includeSubdomains="true">10.0.0.0</domain>
+        <domain includeSubdomains="true">172.16.0.0</domain>
+        <domain includeSubdomains="true">localhost</domain>
+    </domain-config>
+</network-security-config>
